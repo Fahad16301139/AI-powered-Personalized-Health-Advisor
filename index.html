@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Data Input</title>
+</head>
+<body>
+    <h1>Enter Your Health Data</h1>
+    <form action="/plot" method="post">
+        <label for="num_days">Number of Days:</label>
+        <input type="number" id="num_days" name="num_days" min="1" required><br><br>
+        
+        <!-- Dynamically show fields based on the number of days entered -->
+        <div id="days_input">
+            <p>Enter number of days and press "Submit" to see inputs for each day.</p>
+        </div>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('num_days').addEventListener('input', function() {
+            const numDays = this.value;
+            const daysInputDiv = document.getElementById('days_input');
+            daysInputDiv.innerHTML = '';  // Clear previous inputs
+            
+            // Generate input fields for each day
+            for (let i = 1; i <= numDays; i++) {
+                const calorieInput = `<label for="calories_${i}">Calories burned on day ${i}:</label>
+                                      <input type="number" id="calories_${i}" name="calories_${i}" required><br>`;
+                const waterInput = `<label for="water_${i}">Water intake (liters) on day ${i}:</label>
+                                    <input type="number" step="0.1" id="water_${i}" name="water_${i}" required><br><br>`;
+                
+                daysInputDiv.innerHTML += calorieInput + waterInput;
+            }
+        });
+    </script>
+</body>
+</html>
